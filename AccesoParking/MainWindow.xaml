@@ -5,9 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AccesoParking"
         mc:Ignorable="d"
-        Title="MainWindow" 
+        Title="Acceso Parking" 
         Height="450" 
-        Width="800">
+        Width="800"
+        Icon="assets/icono.ico">
     <Grid>
         
     </Grid>
