@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:AccesoParking"
         mc:Ignorable="d"
         Title="Acceso Parking"
-        Height="465.487"
-        Width="487.667"
+        Height="765.237"
+        Width="464.88"
         Icon="assets/icono.ico">
     <Window.Resources>
         <ControlTemplate x:Key="ButtonControlTemplate1"
@@ -80,7 +80,7 @@
                 </Trigger>
             </ControlTemplate.Triggers>
         </ControlTemplate>
-        
+
         <ControlTemplate x:Key="TextBoxControlTemplate1"
                          TargetType="{x:Type TextBox}">
             <Border x:Name="border"
@@ -130,17 +130,18 @@
     <Grid>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
+            <ColumnDefinition Width="194*" />
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
+            <RowDefinition Height="147*" />
+            <RowDefinition Height="305*" />
+            <RowDefinition Height="93*" />
+            <RowDefinition Height="189*" />
         </Grid.RowDefinitions>
-        <StackPanel Grid.ColumnSpan="2"
-                    HorizontalAlignment="Center">
+        <StackPanel HorizontalAlignment="Center"
+                    Margin="165,0,176,0"
+                    Width="116">
             <Border BorderThickness="3"
                     BorderBrush="DarkBlue"
                     Margin="5"
@@ -148,7 +149,6 @@
                 <Image Source="assets/IconoEmpresa.jpg"
                        Width="100"
                        Height="100"
-                   
                        HorizontalAlignment="Left"
                        VerticalAlignment="Top" />
             </Border>
@@ -159,46 +159,44 @@
                        HorizontalAlignment="Center"
                        Margin="0,0,0,15" />
         </StackPanel>
-        <StackPanel Grid.Row="1">
-            <Image Source="assets/IconoEmpresa.jpg"
-                   Margin="15"
-                   Width="100"
-                   Height="100"
-                   VerticalAlignment="Center" />
-        </StackPanel>
-        <Button Content="Hacer Foto"
-                Grid.Column="1"
-                Grid.Row="1"
-                Height="50"
-                FontWeight="Bold"
-                FontSize="16"
-                Template="{DynamicResource ButtonControlTemplate1}" />
+        <Image Source="assets/IconoEmpresa.jpg"
+               Margin="15,18,15,13"
+               Grid.Row="1"
+               VerticalAlignment="Center"
+               Height="274" />
 
         <StackPanel Grid.Row="2"
-                    VerticalAlignment="Center">
+                    VerticalAlignment="Center"
+                    Margin="0,12,0,17"
+                    Height="64">
 
             <TextBox x:Name="MatriculaTextBox"
                      Text=""
                      Margin="5"
+                     Width="300"
                      IsEnabled="False"
-                     Template="{DynamicResource TextBoxControlTemplate1}" />
+                     Template="{DynamicResource TextBoxControlTemplate1}"
+                     FontWeight="Bold"
+                     FontSize="14" />
 
             <TextBox x:Name="Tipo_De_VehiculoTextBox"
                      Text=""
                      Margin="5"
+                     Width="300"
                      Template="{DynamicResource TextBoxControlTemplate1}"
-                     IsEnabled="False" />
+                     IsEnabled="False"
+                     FontWeight="Bold"
+                     FontSize="14" />
 
 
         </StackPanel>
 
-        <Button Content="Aceptar Aparcamiento"
-                Grid.Column="1"
-                Grid.Row="2"
-                Height="50"
+        <Button Content="Aceptar"
+                Grid.Row="3"
                 Template="{DynamicResource ButtonControlTemplate1}"
                 FontWeight="Bold"
-                FontSize="16" />
+                FontSize="16"
+                Margin="104,23,103,23" />
 
     </Grid>
 </Window>
