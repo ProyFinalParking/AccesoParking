@@ -5,11 +5,200 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AccesoParking"
         mc:Ignorable="d"
-        Title="Acceso Parking" 
-        Height="450" 
-        Width="800"
+        Title="Acceso Parking"
+        Height="465.487"
+        Width="487.667"
         Icon="assets/icono.ico">
-    <Grid>
+    <Window.Resources>
+        <ControlTemplate x:Key="ButtonControlTemplate1"
+                         TargetType="{x:Type Button}">
+            <Border x:Name="border"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="2"
+                    Background="{TemplateBinding Background}"
+                    SnapsToDevicePixels="True"
+                    CornerRadius="5"
+                    Margin="5">
+                <Border.Effect>
+                    <DropShadowEffect Opacity="0.4" />
+                </Border.Effect>
+                <ContentPresenter x:Name="contentPresenter"
+                                  ContentTemplate="{TemplateBinding ContentTemplate}"
+                                  Content="{TemplateBinding Content}"
+                                  ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                  Focusable="False"
+                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                  Margin="{TemplateBinding Padding}"
+                                  RecognizesAccessKey="True"
+                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsDefaulted"
+                         Value="True">
+                    <Setter Property="BorderBrush"
+                            TargetName="border"
+                            Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
+                </Trigger>
+                <Trigger Property="IsMouseOver"
+                         Value="True">
+                    <Setter Property="Background"
+                            TargetName="border"
+                            Value="#FFBEE6FD" />
+                    <Setter Property="BorderBrush"
+                            TargetName="border"
+                            Value="#FF3C7FB1" />
+                </Trigger>
+                <Trigger Property="IsPressed"
+                         Value="True">
+                    <Setter Property="Background"
+                            TargetName="border"
+                            Value="#FFC4E5F6" />
+                    <Setter Property="BorderBrush"
+                            TargetName="border"
+                            Value="#FF2C628B" />
+                </Trigger>
+                <Trigger Property="ToggleButton.IsChecked"
+                         Value="True">
+                    <Setter Property="Background"
+                            TargetName="border"
+                            Value="#FFBCDDEE" />
+                    <Setter Property="BorderBrush"
+                            TargetName="border"
+                            Value="#FF245A83" />
+                </Trigger>
+                <Trigger Property="IsEnabled"
+                         Value="False">
+                    <Setter Property="Background"
+                            TargetName="border"
+                            Value="#FFF4F4F4" />
+                    <Setter Property="BorderBrush"
+                            TargetName="border"
+                            Value="#FFADB2B5" />
+                    <Setter Property="Foreground"
+                            Value="#FF838383" />
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
         
+        <ControlTemplate x:Key="TextBoxControlTemplate1"
+                         TargetType="{x:Type TextBox}">
+            <Border x:Name="border"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="1"
+                    Background="{TemplateBinding Background}"
+                    SnapsToDevicePixels="True"
+                    CornerRadius="5">
+                <Border.Effect>
+                    <DropShadowEffect Opacity="0.4" />
+                </Border.Effect>
+                <ScrollViewer x:Name="PART_ContentHost"
+                              Focusable="False"
+                              HorizontalScrollBarVisibility="Hidden"
+                              VerticalScrollBarVisibility="Hidden" />
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsEnabled"
+                         Value="False">
+                    <Setter Property="Opacity"
+                            TargetName="border"
+                            Value="0.56" />
+                </Trigger>
+                <Trigger Property="IsMouseOver"
+                         Value="True">
+                    <Setter Property="BorderBrush"
+                            TargetName="border"
+                            Value="#FF7EB4EA" />
+                </Trigger>
+                <Trigger Property="IsKeyboardFocused"
+                         Value="True">
+                    <Setter Property="BorderBrush"
+                            TargetName="border"
+                            Value="#FF569DE5" />
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </Window.Resources>
+    <Window.Background>
+        <LinearGradientBrush EndPoint="0.5,1"
+                             StartPoint="0.5,0">
+            <GradientStop Color="#FF554E49"
+                          Offset="1" />
+            <GradientStop Color="#FF74726B" />
+        </LinearGradientBrush>
+    </Window.Background>
+    <Grid>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.ColumnSpan="2"
+                    HorizontalAlignment="Center">
+            <Border BorderThickness="3"
+                    BorderBrush="DarkBlue"
+                    Margin="5"
+                    CornerRadius="3">
+                <Image Source="assets/IconoEmpresa.jpg"
+                       Width="100"
+                       Height="100"
+                   
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Top" />
+            </Border>
+            <TextBlock Text="ParkDroid ©"
+                       FontWeight="Bold"
+                       FontSize="14"
+                       VerticalAlignment="Bottom"
+                       HorizontalAlignment="Center"
+                       Margin="0,0,0,15" />
+        </StackPanel>
+        <StackPanel Grid.Row="1">
+            <Image Source="assets/IconoEmpresa.jpg"
+                   Margin="15"
+                   Width="100"
+                   Height="100"
+                   VerticalAlignment="Center" />
+        </StackPanel>
+        <Button Content="Hacer Foto"
+                Grid.Column="1"
+                Grid.Row="1"
+                Height="50"
+                FontWeight="Bold"
+                FontSize="16"
+                Template="{DynamicResource ButtonControlTemplate1}" />
+
+        <StackPanel Grid.Row="2"
+                    VerticalAlignment="Center">
+
+            <TextBox x:Name="MatriculaTextBox"
+                     Text=""
+                     Margin="5"
+                     IsEnabled="False"
+                     Template="{DynamicResource TextBoxControlTemplate1}" />
+
+            <TextBox x:Name="Tipo_De_VehiculoTextBox"
+                     Text=""
+                     Margin="5"
+                     Template="{DynamicResource TextBoxControlTemplate1}"
+                     IsEnabled="False" />
+
+
+        </StackPanel>
+
+        <Button Content="Aceptar Aparcamiento"
+                Grid.Column="1"
+                Grid.Row="2"
+                Height="50"
+                Template="{DynamicResource ButtonControlTemplate1}"
+                FontWeight="Bold"
+                FontSize="16" />
+
     </Grid>
 </Window>
