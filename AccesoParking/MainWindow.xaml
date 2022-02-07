@@ -14,7 +14,7 @@
                          TargetType="{x:Type Button}">
             <Border x:Name="border"
                     BorderBrush="{TemplateBinding BorderBrush}"
-                    BorderThickness="2"
+                    BorderThickness="3"
                     Background="{TemplateBinding Background}"
                     SnapsToDevicePixels="True"
                     CornerRadius="5"
@@ -85,7 +85,7 @@
                          TargetType="{x:Type TextBox}">
             <Border x:Name="border"
                     BorderBrush="{TemplateBinding BorderBrush}"
-                    BorderThickness="1"
+                    BorderThickness="3"
                     Background="{TemplateBinding Background}"
                     SnapsToDevicePixels="True"
                     CornerRadius="5">
