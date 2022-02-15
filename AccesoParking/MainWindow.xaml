@@ -159,11 +159,12 @@
                        HorizontalAlignment="Center"
                        Margin="0,0,0,15" />
         </StackPanel>
-        <Image Source="assets/IconoEmpresa.jpg"
+        <Image x:Name="MatriculaImage"
                Margin="15,18,15,13"
                Grid.Row="1"
                VerticalAlignment="Center"
-               Height="274" />
+               Height="274" 
+               MouseDown="MatriculaImage_MouseDown" />
 
         <StackPanel Grid.Row="2"
                     VerticalAlignment="Center"
