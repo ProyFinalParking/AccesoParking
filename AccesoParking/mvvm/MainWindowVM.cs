@@ -73,17 +73,24 @@ namespace AccesoParking.mvvm
             string UrlImagenInterna;
 
             UrlImagenInterna = AbrirDialogo();
-            NuevoVehiculo.Foto = servicioAlmacenamiento.SubirImagen(UrlImagenInterna);
-            NuevoVehiculo.Matricula = servicioMatricula.GetMatricula(nuevoVehiculo.Foto);
-            NuevoVehiculo.Tipo = servicioTipoVehiculo.ComprobarVehiculo(nuevoVehiculo.Foto);
+            if(UrlImagenInterna != "")
+            {
+                NuevoVehiculo.Foto = servicioAlmacenamiento.SubirImagen(UrlImagenInterna);
+                NuevoVehiculo.Matricula = servicioMatricula.GetMatricula(nuevoVehiculo.Foto);
+                NuevoVehiculo.Tipo = servicioTipoVehiculo.ComprobarVehiculo(nuevoVehiculo.Foto);
 
-            BitmapImage bi = new BitmapImage();
+                BitmapImage bi = new BitmapImage();
 
-            bi.BeginInit();
-            bi.UriSource = new Uri(UrlImagenInterna, UriKind.Absolute);
-            bi.EndInit();
+                bi.BeginInit();
+                bi.UriSource = new Uri(UrlImagenInterna, UriKind.Absolute);
+                bi.EndInit();
 
-            return bi;
+                return bi;
+
+            }else
+            {
+                return imagenPorDefecto();
+            }
         }
 
         public bool AceptarCliente()
