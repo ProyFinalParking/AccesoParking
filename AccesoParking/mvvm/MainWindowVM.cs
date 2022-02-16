@@ -1,5 +1,7 @@
-﻿using AccesoParking.servicios;
+﻿using AccesoParking.modelo;
+using AccesoParking.servicios;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
+using Microsoft.Toolkit.Mvvm.Input;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -19,13 +21,25 @@ namespace AccesoParking.mvvm
         private readonly ComputerVisionService servicioMatricula;
         private readonly CustomVisionService servicioTipoVehiculo;
 
-        string UrlImagen;
+        private Vehiculo nuevoVehiculo;
+
+        public Vehiculo NuevoVehiculo
+        {
+            get { return nuevoVehiculo; }
+            set { SetProperty(ref nuevoVehiculo, value); }
+        }
+
+        public RelayCommand AceptarEstacionamientoCommand { get; }
 
         public MainWindowVM()
         {
             servicioAlmacenamiento = new AzureBlobStorage();
             servicioMatricula = new ComputerVisionService();
             servicioTipoVehiculo = new CustomVisionService();
+
+            nuevoVehiculo = new Vehiculo();
+
+            AceptarEstacionamientoCommand = new RelayCommand(AceptarCliente);
         }
 
         public string AbrirDialogo()
@@ -57,33 +71,26 @@ namespace AccesoParking.mvvm
             string UrlImagenInterna;
 
             UrlImagenInterna = AbrirDialogo();
-            UrlImagen = servicioAlmacenamiento.SubirImagen(UrlImagenInterna);
+            nuevoVehiculo.Foto = servicioAlmacenamiento.SubirImagen(UrlImagenInterna);
+            nuevoVehiculo.Matricula = servicioMatricula.GetMatricula(nuevoVehiculo.Foto);
+            nuevoVehiculo.Tipo = servicioTipoVehiculo.ComprobarVehiculo(nuevoVehiculo.Foto);
 
             BitmapImage bi = new BitmapImage();
 
             bi.BeginInit();
-            bi.UriSource = new Uri(UrlImagen, UriKind.Absolute);
+            bi.UriSource = new Uri(UrlImagenInterna, UriKind.Absolute);
             bi.EndInit();
 
             return bi;
         }
 
-        public string CargarMatricula()
+        public void AceptarCliente()
         {
-            string matricula;
+            int idVehiculo;
 
-            matricula = servicioMatricula.GetMatricula(UrlImagen);
+            idVehiculo = ServicioDB.GetVehicleId(nuevoVehiculo.Matricula);
 
-            return matricula;
-        }
-
-        public string CargarTipoVehiculo()
-        {
-            string tipoVehiculo;
-
-            tipoVehiculo = servicioTipoVehiculo.ComprobarVehiculo(UrlImagen);
-
-            return tipoVehiculo;
+            if()
         }
 
     }

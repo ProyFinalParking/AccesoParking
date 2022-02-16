@@ -172,7 +172,7 @@
                     Height="64">
 
             <TextBox x:Name="MatriculaTextBox"
-                     Text=""
+                     Text="{Binding NuevoVehiculo.Matricula}"
                      Margin="5"
                      Width="300"
                      IsEnabled="False"
@@ -181,7 +181,7 @@
                      FontSize="14" />
 
             <TextBox x:Name="Tipo_De_VehiculoTextBox"
-                     Text=""
+                     Text="{Binding NuevoVehiculo.Tipo}"
                      Margin="5"
                      Width="300"
                      Template="{DynamicResource TextBoxControlTemplate1}"
@@ -197,7 +197,8 @@
                 Template="{DynamicResource ButtonControlTemplate1}"
                 FontWeight="Bold"
                 FontSize="16"
-                Margin="104,23,103,23" />
+                Margin="104,23,103,23"
+                Command="{Binding Path=AceptarEstacionamientoCommand}"/>
 
     </Grid>
 </Window>

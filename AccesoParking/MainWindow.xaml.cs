@@ -23,8 +23,6 @@ namespace AccesoParking
         private void MatriculaImage_MouseDown(object sender, MouseButtonEventArgs e)
         {
             MatriculaImage.Source = vm.CargarImagen();
-            MatriculaTextBox.Text = vm.CargarMatricula();
-            Tipo_De_VehiculoTextBox.Text = vm.CargarTipoVehiculo();
         }
     }
 }
