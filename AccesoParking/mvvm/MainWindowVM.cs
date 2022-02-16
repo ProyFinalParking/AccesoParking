@@ -86,20 +86,29 @@ namespace AccesoParking.mvvm
             return bi;
         }
 
-        public void AceptarCliente()
+        public bool AceptarCliente()
         {
+            bool respuesta = false;
+
             if (NuevoVehiculo.Matricula != "" && NuevoVehiculo.Tipo != "")
             {
-                AddEstacionamiento();
+                if (AddEstacionamiento())
+                {
+                    respuesta = true;
+                }
             }
             else
             {
                 ServicioDialogos.ErrorMensaje("No se reconoce la imagen, la matricula o el tipo de vehiculo.");
             }
+
+            return respuesta;
         }
 
-        private void AddEstacionamiento()
+        private bool AddEstacionamiento()
         {
+            bool respuesta = false;
+
             // En caso de que el coche no este registrado, devuelve ID = 0
             NuevoEstacionamiento.IdVehiculo = ServicioDB.GetVehicleId(nuevoVehiculo.Matricula);
 
@@ -121,6 +130,8 @@ namespace AccesoParking.mvvm
                     // Se resetean las propiedades
                     NuevoVehiculo = new Vehiculo();
                     NuevoEstacionamiento = new Estacionamiento();
+
+                    respuesta = true;
                 }
                 else
                 {
@@ -131,6 +142,8 @@ namespace AccesoParking.mvvm
             {
                 ServicioDialogos.ErrorMensaje("Hay un estacionamiento activo de la matricula: " + NuevoVehiculo.Matricula);
             }
+
+            return respuesta;
         }
 
         private bool ExistenPlazasLibres(string tipoVehiculo)
