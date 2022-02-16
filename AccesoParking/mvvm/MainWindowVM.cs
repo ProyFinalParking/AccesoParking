@@ -17,16 +17,26 @@ namespace AccesoParking.mvvm
     {
         //TODO Boton aceptar y agregar a DB
 
+        // Propiedad de Configuración de aplicaciones con el numero de plazas
+        static readonly int plazasCoches = Properties.Settings.Default.PlazasCoches;
+        static readonly int plazasMotos = Properties.Settings.Default.PlazasMotos;
+
         private readonly AzureBlobStorage servicioAlmacenamiento;
         private readonly ComputerVisionService servicioMatricula;
         private readonly CustomVisionService servicioTipoVehiculo;
 
         private Vehiculo nuevoVehiculo;
-
         public Vehiculo NuevoVehiculo
         {
             get { return nuevoVehiculo; }
             set { SetProperty(ref nuevoVehiculo, value); }
+        }
+
+        private Estacionamiento nuevoEstacionamiento;
+        public Estacionamiento NuevoEstacionamiento
+        {
+            get { return nuevoEstacionamiento; }
+            set { SetProperty(ref nuevoEstacionamiento, value); }
         }
 
         public RelayCommand AceptarEstacionamientoCommand { get; }
@@ -86,11 +96,45 @@ namespace AccesoParking.mvvm
 
         public void AceptarCliente()
         {
-            int idVehiculo;
+            /*
+            // Guarda la ID del vehiculo. En caso de que el coche no este registrado ID = 0
+            NuevoEstacionamiento.IdVehiculo = ServicioDB.GetVehicleId(nuevoVehiculo.Matricula);
+            NuevoEstacionamiento.Matricula = NuevoVehiculo.Matricula;
+            NuevoEstacionamiento.Tipo = NuevoVehiculo.Tipo;
+            NuevoEstacionamiento.Entrada = DateTime.Now.ToString();
 
-            idVehiculo = ServicioDB.GetVehicleId(nuevoVehiculo.Matricula);
+            // Comprueba que el coche (la matricula) no tenga estacionamiento activo
+            // Comprueba que hayan plazas libres para el tipo del vehiculo
+            if (!ServicioDB.IsActiveParkedVehicle(nuevoVehiculo.Matricula) && ExistenPlazasLibres(nuevoVehiculo.Tipo))
+            {
+                ServicioDB.InsertVehicleInParking(NuevoEstacionamiento);
+            }
+            */
+        }
 
-            if()
+        private bool ExistenPlazasLibres(string tipoVehiculo)
+        {
+            bool ExistenPlazasLibres = false;
+
+            switch (tipoVehiculo)
+            {
+                case "Coche":
+                    int numCoches = ServicioDB.GetNumberParkedCars();
+                    if((plazasCoches - numCoches) > 0)
+                    {
+                        ExistenPlazasLibres = true;
+                    }
+                    break;
+                case "Moto":
+                    int numMotos = ServicioDB.GetNumberParkedMotorcycles();
+                    if ((plazasMotos - numMotos) > 0)
+                    {
+                        ExistenPlazasLibres = true;
+                    }
+                    break;
+            }
+
+            return ExistenPlazasLibres;
         }
 
     }
