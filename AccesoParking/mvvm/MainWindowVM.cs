@@ -4,11 +4,6 @@ using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
 using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 
 namespace AccesoParking.mvvm
@@ -39,17 +34,14 @@ namespace AccesoParking.mvvm
             set { SetProperty(ref nuevoEstacionamiento, value); }
         }
 
-        public RelayCommand AceptarEstacionamientoCommand { get; }
-
         public MainWindowVM()
         {
             servicioAlmacenamiento = new AzureBlobStorage();
             servicioMatricula = new ComputerVisionService();
             servicioTipoVehiculo = new CustomVisionService();
 
-            nuevoVehiculo = new Vehiculo();
-
-            AceptarEstacionamientoCommand = new RelayCommand(AceptarCliente);
+            NuevoVehiculo = new Vehiculo();
+            NuevoEstacionamiento = new Estacionamiento();
         }
 
         public string AbrirDialogo()
@@ -81,9 +73,9 @@ namespace AccesoParking.mvvm
             string UrlImagenInterna;
 
             UrlImagenInterna = AbrirDialogo();
-            nuevoVehiculo.Foto = servicioAlmacenamiento.SubirImagen(UrlImagenInterna);
-            nuevoVehiculo.Matricula = servicioMatricula.GetMatricula(nuevoVehiculo.Foto);
-            nuevoVehiculo.Tipo = servicioTipoVehiculo.ComprobarVehiculo(nuevoVehiculo.Foto);
+            NuevoVehiculo.Foto = servicioAlmacenamiento.SubirImagen(UrlImagenInterna);
+            NuevoVehiculo.Matricula = servicioMatricula.GetMatricula(nuevoVehiculo.Foto);
+            NuevoVehiculo.Tipo = servicioTipoVehiculo.ComprobarVehiculo(nuevoVehiculo.Foto);
 
             BitmapImage bi = new BitmapImage();
 
@@ -96,20 +88,49 @@ namespace AccesoParking.mvvm
 
         public void AceptarCliente()
         {
-            /*
-            // Guarda la ID del vehiculo. En caso de que el coche no este registrado ID = 0
+            if (NuevoVehiculo.Matricula != "" && NuevoVehiculo.Tipo != "")
+            {
+                AddEstacionamiento();
+            }
+            else
+            {
+                ServicioDialogos.ErrorMensaje("No se reconoce la imagen, la matricula o el tipo de vehiculo.");
+            }
+        }
+
+        private void AddEstacionamiento()
+        {
+            // En caso de que el coche no este registrado, devuelve ID = 0
             NuevoEstacionamiento.IdVehiculo = ServicioDB.GetVehicleId(nuevoVehiculo.Matricula);
+
             NuevoEstacionamiento.Matricula = NuevoVehiculo.Matricula;
             NuevoEstacionamiento.Tipo = NuevoVehiculo.Tipo;
             NuevoEstacionamiento.Entrada = DateTime.Now.ToString();
 
             // Comprueba que el coche (la matricula) no tenga estacionamiento activo
             // Comprueba que hayan plazas libres para el tipo del vehiculo
-            if (!ServicioDB.IsActiveParkedVehicle(nuevoVehiculo.Matricula) && ExistenPlazasLibres(nuevoVehiculo.Tipo))
+            if (!ServicioDB.IsActiveParkedVehicle(nuevoVehiculo.Matricula))
             {
-                ServicioDB.InsertVehicleInParking(NuevoEstacionamiento);
+                if (ExistenPlazasLibres(nuevoVehiculo.Tipo))
+                {
+                    // Se inserta el estacionamiento en la BBDD
+                    ServicioDB.InsertVehicleInParking(NuevoEstacionamiento);
+
+                    ServicioDialogos.EstacionamientoAprobado();
+
+                    // Se resetean las propiedades
+                    NuevoVehiculo = new Vehiculo();
+                    NuevoEstacionamiento = new Estacionamiento();
+                }
+                else
+                {
+                    ServicioDialogos.ErrorMensaje("El Parking esta lleno");
+                }
             }
-            */
+            else
+            {
+                ServicioDialogos.ErrorMensaje("Hay un estacionamiento activo de la matricula: " + NuevoVehiculo.Matricula);
+            }
         }
 
         private bool ExistenPlazasLibres(string tipoVehiculo)
@@ -120,7 +141,7 @@ namespace AccesoParking.mvvm
             {
                 case "Coche":
                     int numCoches = ServicioDB.GetNumberParkedCars();
-                    if((plazasCoches - numCoches) > 0)
+                    if ((plazasCoches - numCoches) > 0)
                     {
                         ExistenPlazasLibres = true;
                     }

@@ -28,7 +28,7 @@ namespace AccesoParking.servicios
          * TODO: Eliminar los metodos inutilizados¿?
          * **************************************************************************************************************************/
 
-        
+
         /*******************************************************
             METODOS RELACIONADOS CON EL VEHICULO
          *******************************************************/
@@ -98,7 +98,7 @@ namespace AccesoParking.servicios
                 command.ExecuteNonQuery();
             }
         }
-        
+
         // Comprueba si el vehiculo esta estacionado actualmente (no tiene fecha de salida)
         public static bool IsActiveParkedVehicle(string matricula)
         {
@@ -348,7 +348,8 @@ namespace AccesoParking.servicios
                                 (11, 0, '8528FTJ', '02/02/2022 1:00:33', '', 0.0, 'Coche'),
                                 (12, 0, '6542DTJ', '02/02/2022 1:00:33', '', 0.0, 'Coche'),
                                 (13, 7, '2648KHY', '02/02/2022 1:00:33', '', 0.0, 'Coche'),
-                                (14, 0, '9644JJH', '02/02/2022 1:00:33', '', 0.0, 'Coche')";
+                                (14, 0, '9644JJH', '02/02/2022 1:00:33', '', 0.0, 'Coche'),
+                                (15, 0, '51F-155.85', '16/02/2022 19:37:53', '', 0.0, 'Coche')";
                     command.ExecuteNonQuery();
 
                     //Commit

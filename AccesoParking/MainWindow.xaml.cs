@@ -24,5 +24,14 @@ namespace AccesoParking
         {
             MatriculaImage.Source = vm.CargarImagen();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            // No se hace con command, para poder resetear la imagen
+            vm.AceptarCliente();
+
+            // Se resetea la imagen
+            MatriculaImage.Source = vm.imagenPorDefecto();
+        }
     }
 }

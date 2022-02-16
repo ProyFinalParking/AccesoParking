@@ -8,6 +8,7 @@
         Title="Acceso Parking"
         Height="765.237"
         Width="464.88"
+        WindowStartupLocation="CenterScreen"
         Icon="assets/icono.ico">
     <Window.Resources>
         <ControlTemplate x:Key="ButtonControlTemplate1"
@@ -197,8 +198,8 @@
                 Template="{DynamicResource ButtonControlTemplate1}"
                 FontWeight="Bold"
                 FontSize="16"
-                Margin="104,23,103,23"
-                Command="{Binding Path=AceptarEstacionamientoCommand}"/>
+                Margin="104,23,103,23" Click="Button_Click"
+                />
 
     </Grid>
 </Window>
